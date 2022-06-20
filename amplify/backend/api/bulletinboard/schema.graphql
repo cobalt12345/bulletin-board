@@ -1,0 +1,28 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+type Channel {
+    name: String!
+    data: AWSJSON!
+}
+
+type Mutation {
+    publish2channel(name: String!, data: AWSJSON!): Channel
+}
+
+type Query {
+    getChannel: Channel
+}
+
+type Subscription {
+    subscribe2channel(name: String!): Channel
+    @aws_subscribe(mutations: ["publish2channel"])
+}
+
