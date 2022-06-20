@@ -17,6 +17,12 @@
           "appId": "d3elfr9tm2yfjk",
           "type": "manual"
         }
+      },
+      "function": {
+        "DatasourceAdapter": {
+          "deploymentBucketName": "amplify-bulletinboard-dev-151713-deployment",
+          "s3Key": "amplify-builds/DatasourceAdapter-51344f58524d65713737-build.zip"
+        }
       }
     }
   }

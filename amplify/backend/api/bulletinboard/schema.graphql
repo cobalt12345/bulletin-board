@@ -10,19 +10,26 @@ schema {
 
 type Channel {
     name: String!
-    data: AWSJSON!
+}
+
+type BoardMessage {
+    id: ID!
+    channel: Channel!
+    body: String!
+    publishedAt: AWSDateTime!
 }
 
 type Mutation {
-    publish2channel(name: String!, data: AWSJSON!): Channel
+    pushMessageToChannel(channel: Channel!, data: String!): BoardMessage @function(name: "DatasourceAdapter-${env}")
 }
 
 type Query {
-    getChannel: Channel
+    allMessages: [BoardMessage] @function(name: "DatasourceAdapter-${env}")
+    lastNMessages(numOfMessages: Int!): [BoardMessage] @function(name: "DatasourceAdapter-${env}")
 }
 
 type Subscription {
-    subscribe2channel(name: String!): Channel
-    @aws_subscribe(mutations: ["publish2channel"])
+    subscribe2channel(channel: Channel!): Channel
+    @aws_subscribe(mutations: ["pushMessageToChannel"])
 }
 

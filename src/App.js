@@ -47,9 +47,12 @@ class OpinionBoard extends Component {
      *
      * @param message
      */
-    async onSaveMessage(message) {
+    onSaveMessage(message) {
         console.debug("Save message: " + message);
-        let channel = await this.apiClient.publish({Subject: 'Board message', Body: message});
+        let channel = this.apiClient.publish({Subject: 'Board message', Body: message})
+            .then((value) => {console.debug('Message published', value)})
+            .catch((reason) => {console.error('Message publish failed', reason)});
+
         console.debug('Channel', channel);
         this.setState({dialogOpen: false});
     }
