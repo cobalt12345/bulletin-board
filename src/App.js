@@ -49,7 +49,7 @@ class OpinionBoard extends Component {
      */
     onSaveMessage(message) {
         console.debug("Save message: " + message);
-        let channel = this.apiClient.publish({Subject: 'Board message', Body: message})
+        let channel = this.apiClient.publish(message)
             .then((value) => {console.debug('Message published', value)})
             .catch((reason) => {console.error('Message publish failed', reason)});
 
@@ -62,7 +62,7 @@ class OpinionBoard extends Component {
 
         if (message) {
             let arrayOfMessage = [];
-            let messageObj = JSON.parse(message.value.data.subscribe2channel.data);
+            let messageObj = message.value.data.subscribe2channel.body;
             console.debug('Message body:', messageObj);
             arrayOfMessage.push(messageObj);
             this.setState((prevState, props) => {
@@ -88,7 +88,7 @@ class OpinionBoard extends Component {
         const messageItems = this.state.messages.map((message, index) => {
             return (
                         <Item key={index} elevation={10}>
-                                {message.Body.split('\n').map((messageRow, messageRowIndex) => {
+                                {message.split('\n').map((messageRow, messageRowIndex) => {
                                     return <div key={messageRowIndex}>{messageRow}</div>;
                                 })}
                         </Item>

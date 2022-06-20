@@ -7,7 +7,7 @@
     }
   },
   "api": {
-    "bulletinboard": {
+    "BBoardAPI": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -17,8 +17,8 @@
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 365,
-              "apiKeyExpirationDate": "2023-06-20T12:41:57.344Z",
-              "description": "Bulletin API auth. key"
+              "apiKeyExpirationDate": "2023-06-20T21:16:33.669Z",
+              "description": "Bulleting Board API key"
             }
           },
           "additionalAuthenticationProviders": []

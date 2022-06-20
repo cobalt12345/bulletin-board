@@ -8,19 +8,15 @@ schema {
     subscription: Subscription
 }
 
-type Channel {
-    name: String!
-}
-
 type BoardMessage {
     id: ID!
-    channel: Channel!
+    channel: String!
     body: String!
     publishedAt: AWSDateTime!
 }
 
 type Mutation {
-    pushMessageToChannel(channel: Channel!, data: String!): BoardMessage @function(name: "DatasourceAdapter-${env}")
+    pushMessageToChannel(channel: String!, data: String!): BoardMessage @function(name: "DatasourceAdapter-${env}")
 }
 
 type Query {
@@ -29,7 +25,7 @@ type Query {
 }
 
 type Subscription {
-    subscribe2channel(channel: Channel!): Channel
+    subscribe2channel(channel: String!): BoardMessage
     @aws_subscribe(mutations: ["pushMessageToChannel"])
 }
 

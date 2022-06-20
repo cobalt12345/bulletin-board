@@ -12,7 +12,7 @@ export default class BBoardApiClient {
 
     subscribe() {
         console.debug(`Subscribe to channel ${this.channelName}`)
-        this.subscription = API.graphql(graphqlOperation(subscriptions.subscribe2channel, {name: this.channelName}))
+        this.subscription = API.graphql(graphqlOperation(subscriptions.subscribe2channel, {channel: this.channelName}))
             .subscribe({
                     next: this.onReceiveMessageCallback,
                 error: (error) => console.error('API subscription error', error)
@@ -20,11 +20,11 @@ export default class BBoardApiClient {
         console.debug(this.subscription);
     }
 
-    async publish(message: {Subject: '', Body: ''}) {
-        console.debug(`Publish message '${JSON.stringify(message)}' to the channel ${this.channelName}`);
+    async publish(message) {
+        console.debug(`Publish message '${message}' to the channel ${this.channelName}`);
 
-        return API.graphql(graphqlOperation(mutations.publish2channel,
-            {name: this.channelName, data: JSON.stringify(message)}));
+        return API.graphql(graphqlOperation(mutations.pushMessageToChannel,
+            {channel: this.channelName, data: message}));
 
     }
 
