@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Amplify, { Storage, Predictions } from 'aws-amplify';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,6 +10,7 @@ import Slide from '@mui/material/Slide';
 import {Component} from "react";
 import {TextField} from "@mui/material";
 import {GlobalHotKeys} from "react-hotkeys";
+import AudioRecorder from "./lib/AudioRecorder";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
@@ -18,10 +20,11 @@ export default class AddMessageDialog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {opinion: ''};
+        this.state = {opinion: '', isRecording: false};
         console.debug('AddMessageDialog initially open: ' + this.state.open);
         this.handleTextTypeIn = this.handleTextTypeIn.bind(this);
         this.onSave = this.onSave.bind(this);
+        this.convertFromBuffer = this.convertFromBuffer.bind(this);
         this.hotKeyHandlers = {
             SAVE_MESSAGE: this.onSave
         }
@@ -36,6 +39,18 @@ export default class AddMessageDialog extends Component {
             this.props.onSave(this.state.opinion);
         }
         this.setState({opinion: ''});
+    }
+
+    convertFromBuffer(bytes) {
+        Predictions.convert({
+            transcription: {
+                source: {
+                    bytes
+                },
+                // language: "en-US", // other options are "en-GB", "fr-FR", "fr-CA", "es-US"
+            },
+        }).then(({ transcription: { fullText } }) => this.setState({opinion: fullText}))
+            .catch(err => console.error(JSON.stringify(err, null, 2)))
     }
 
     render() {
@@ -72,6 +87,7 @@ export default class AddMessageDialog extends Component {
                                 />
                         </DialogContent>
                         <DialogActions>
+                                <AudioRecorder finishRecording={this.convertFromBuffer} />
                             <Button onClick={() => {
                                 this.setState({opinion: ''})
                                 this.props.onCancel();
