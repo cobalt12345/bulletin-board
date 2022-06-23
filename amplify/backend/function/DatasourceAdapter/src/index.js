@@ -2,6 +2,14 @@ const { v4: uuidv4 } = require('uuid');
 const webpush = require('web-push');
 const { DynamoDBClient, ScanCommand } = require("@aws-sdk/client-dynamodb");
 
+console.debug(`Subj: ${process.env.REACT_APP_VAPID_SUBJECT}`);
+
+webpush.setVapidDetails(
+    process.env.REACT_APP_VAPID_SUBJECT,
+    process.env.REACT_APP_VAPID_PUBLIC_KEY,
+    process.env.REACT_APP_VAPID_PRIVATE_KEY
+);
+
 async function getSubscriptions() {
     const client = new DynamoDBClient({region: 'eu-central-1'});
     const command = new ScanCommand({
@@ -46,14 +54,16 @@ exports.handler = async (event, context, callback) => {
     try {
         let subscriptions = await getSubscriptions();
         console.debug("Subscriptions: ", subscriptions);
-
         subscriptions.forEach((subscription) => {
-            let result = webpush.sendNotification(subscription, JSON.stringify({body: message.body, title: 'IMHO Board Message'}));
+            let result = webpush.sendNotification(subscription,
+                JSON.stringify({body: message.body, title: 'IMHO Board Message'}));
+            // .then((result) => console.debug("Web push result", result))
+            //     .catch(reason => console.error("Web push error", reason));
             promises.push(result);
         });
     } catch(err) {
         console.error(err)
     }
-    await Promise.all(promises);
 
+    await Promise.all(promises);
 };
