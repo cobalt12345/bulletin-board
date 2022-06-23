@@ -1,0 +1,13 @@
+{
+    "resourceName": "bulletinvoicetotext",
+    "convertPolicyName": "transcriptionPolicycd65f8dc",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "convertType": "transcription",
+    "language": "en-US",
+    "access": "authAndGuest"
+}

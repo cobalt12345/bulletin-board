@@ -12,8 +12,10 @@ import {ThemeProvider} from '@mui/material/styles';
 import theme from "./theme";
 import {Amplify} from "aws-amplify";
 import awsExports from "./aws-exports";
+import { AmazonAIPredictionsProvider } from '@aws-amplify/predictions';
 
 Amplify.configure(awsExports);
+Amplify.addPluggable(new AmazonAIPredictionsProvider());
 
 ReactDOM.hydrate(
     <ThemeProvider theme={theme}>

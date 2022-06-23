@@ -11,6 +11,12 @@ import {configure, GlobalHotKeys} from "react-hotkeys";
 import {Item, keyMap} from "./lib/utils";
 import BBoardApiClient from "./lib/BBoardApiClient";
 
+
+global.consoleDebug = console.debug;
+console.debug = function () {
+    global.consoleDebug("Console debug is disabled");
+}
+
 configure({
     ignoreTags: []
 })

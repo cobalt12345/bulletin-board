@@ -11,6 +11,7 @@ import {Component} from "react";
 import {TextField} from "@mui/material";
 import {GlobalHotKeys} from "react-hotkeys";
 import AudioRecorder from "./lib/AudioRecorder";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
@@ -24,7 +25,6 @@ export default class AddMessageDialog extends Component {
         console.debug('AddMessageDialog initially open: ' + this.state.open);
         this.handleTextTypeIn = this.handleTextTypeIn.bind(this);
         this.onSave = this.onSave.bind(this);
-        this.convertFromBuffer = this.convertFromBuffer.bind(this);
         this.hotKeyHandlers = {
             SAVE_MESSAGE: this.onSave
         }
@@ -41,19 +41,8 @@ export default class AddMessageDialog extends Component {
         this.setState({opinion: ''});
     }
 
-    convertFromBuffer(bytes) {
-        Predictions.convert({
-            transcription: {
-                source: {
-                    bytes
-                },
-                // language: "en-US", // other options are "en-GB", "fr-FR", "fr-CA", "es-US"
-            },
-        }).then(({ transcription: { fullText } }) => this.setState({opinion: fullText}))
-            .catch(err => console.error(JSON.stringify(err, null, 2)))
-    }
-
     render() {
+
         return (
             <GlobalHotKeys handlers={this.hotKeyHandlers} focused='true'>
                 <div>
@@ -72,7 +61,8 @@ export default class AddMessageDialog extends Component {
                             <DialogContentText id="alert-dialog-slide-description">
                                 Your opinion:
                             </DialogContentText>
-
+                            {
+                                this.state.isRecording ? (<CircularProgress />) : (
                                 <TextField
                                     id="filled-multiline-flexible"
                                     label="Multiline"
@@ -85,14 +75,24 @@ export default class AddMessageDialog extends Component {
                                     onChange={this.handleTextTypeIn}
                                     variant="filled"
                                 />
+                                )
+                            }
                         </DialogContent>
                         <DialogActions>
-                                <AudioRecorder finishRecording={this.convertFromBuffer} />
+                                <AudioRecorder onStartRecording={
+                                    (start:boolean) => {this.setState({isRecording: start})}
+                                }
+                                onStopRecording={
+                                    (start: boolean, text: string) => {
+                                        this.setState({isRecording: start, opinion: text});
+                                    }
+                                }
+                                />
                             <Button onClick={() => {
                                 this.setState({opinion: ''})
                                 this.props.onCancel();
-                            }}>Cancel</Button>
-                            <Button onClick={this.onSave}>Add</Button>
+                            }} disabled={this.state.isRecording}>Cancel</Button>
+                            <Button onClick={this.onSave} disabled={this.state.isRecording}>Add</Button>
                         </DialogActions>
                     </Dialog>
                 </div>

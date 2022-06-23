@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/predictions": "^4.0.44",
     "@aws-amplify/ui-react": "^3.0.0",
     "@emotion/styled": "^11.9.3",
     "@fontsource/roboto": "^4.5.7",
@@ -16,10 +17,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hotkeys": "^2.0.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "4.0.3",
     "uuid": "^8.3.2",
-    "web-vitals": "^2.1.4",
-    "webpack": "^5.73.0"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -44,8 +44,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "buffer": "^6.0.3"
   }
 }

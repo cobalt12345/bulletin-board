@@ -13,5 +13,22 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string"
         }
+    },
+    "auth": {
+        "bulletinboard5ab0396e": {
+            "IdentityPoolId": "string",
+            "IdentityPoolName": "string",
+            "UserPoolId": "string",
+            "UserPoolArn": "string",
+            "UserPoolName": "string",
+            "AppClientIDWeb": "string",
+            "AppClientID": "string"
+        }
+    },
+    "predictions": {
+        "bulletinvoicetotext": {
+            "region": "string",
+            "language": "string"
+        }
     }
 }

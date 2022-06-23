@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import MicrophoneStream from 'microphone-stream';
 import Button from "@mui/material/Button";
+import {PlayArrow, Stop} from "@mui/icons-material";
+import {Predictions} from "aws-amplify";
 
 export default function AudioRecorder(props) {
     const [recording, setRecording] = useState(false);
     const [micStream, setMicStream] = useState();
+    const [transcribing, setTranscribing] = useState();
+
     const [audioBuffer] = useState(
         (function () {
             let buffer = [];
@@ -35,10 +39,11 @@ export default function AudioRecorder(props) {
 
     async function startRecording() {
         console.log('start recording');
+        props.onStartRecording(true);
         audioBuffer.reset();
 
         window.navigator.mediaDevices.getUserMedia({video: false, audio: true}).then((stream) => {
-            const microphoneStream = new MicrophoneStream({bufferSize: 256, objectMode: true});
+            const microphoneStream = new MicrophoneStream({bufferSize: 256, objectMode: false});
             microphoneStream.setStream(stream);
             microphoneStream.on('data', (chunk) => {
                 let raw = MicrophoneStream.toRaw(chunk);
@@ -54,18 +59,31 @@ export default function AudioRecorder(props) {
 
     async function stopRecording() {
         console.log('stop recording');
-        const {finishRecording} = props;
-
+        setTranscribing(true);
         micStream.stop();
         setMicStream(null);
         setRecording(false);
 
         const resultBuffer = audioBuffer.getData();
 
-        if (typeof finishRecording === "function") {
-            finishRecording(resultBuffer);
-        }
+        await convertFromBuffer(resultBuffer);
 
+    }
+
+    async function convertFromBuffer(bytes) {
+        await Predictions.convert({
+            transcription: {
+                source: {
+                    bytes
+                },
+                // language: "en-US", // other options are "en-GB", "fr-FR", "fr-CA", "es-US"
+            },
+        }).then(({ transcription: { fullText } }) => {
+            console.debug('Transcribed text: ', fullText);
+            // this.setState({opinion: fullText, isRecording: false});
+            props.onStopRecording(false, fullText);
+            setTranscribing(false);
+        }).catch(err => console.error(JSON.stringify(err, null, 2)))
     }
 
     async function onStartStopRecord() {
@@ -79,10 +97,15 @@ export default function AudioRecorder(props) {
     }
 
     return (
-        <Button onClick={onStartStopRecord}>
-            {(() => {
-                return recording ? 'Stop' : 'Start';
-            })()}
-        </Button>
+            <Button onClick={onStartStopRecord}
+                    variant="outlined"
+                    color="error"
+                    startIcon={recording ? <Stop/> : <PlayArrow/>}
+                    disabled={transcribing}>
+
+                {(() => {
+                    return recording ? 'Stop speech recognition' : 'Start speech recognition';
+                })()}
+            </Button>
     );
 }
