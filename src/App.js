@@ -32,7 +32,7 @@ class OpinionBoard extends Component {
         super(props);
         this.state = {
             dialogOpen: false,
-            messages: []
+            messages: [],
         }
         this.onAddMessage = this.onAddMessage.bind(this);
         this.onSaveMessage = this.onSaveMessage.bind(this);
@@ -40,15 +40,17 @@ class OpinionBoard extends Component {
         this.onReceiveMessage = this.onReceiveMessage.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.componentWillUnmount = this.componentWillUnmount.bind(this);
-
     }
 
     componentDidMount() {
         this.apiClient = new BBoardApiClient(this.onReceiveMessage);
         subscribe(process.env.REACT_APP_WEB_PUSH_TOPIC, this.apiClient)
-            .then((value => {console.debug('Subscribed to webpush topic', value)}))
-            .catch((reason => {console.error('Subscription to webpush failed', reason)}));
-
+            .then((value) => {
+                console.debug('Subscribed to webpush topic', value);
+            })
+            .catch((reason) => {
+                console.error('Subscription to webpush failed', reason)
+            });
     }
 
     componentWillUnmount() {
