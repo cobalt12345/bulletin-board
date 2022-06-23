@@ -8,6 +8,8 @@
     "@types/aws-lambda": "^8.10.92"
   },
   "dependencies": {
-    "uuid": "^8.3.2"
+    "@aws-sdk/client-dynamodb": "^3.113.0",
+    "uuid": "^8.3.2",
+    "web-push": "^3.5.0"
   }
 }

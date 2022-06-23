@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {configure, GlobalHotKeys} from "react-hotkeys";
 import {Item, keyMap} from "./lib/utils";
 import BBoardApiClient from "./lib/BBoardApiClient";
+import subscribe from './lib/subscribe-to-webpush';
 
 if (process.env.REACT_APP_ENV === 'production') {
     global.consoleDebug = console.debug;
@@ -17,6 +18,7 @@ if (process.env.REACT_APP_ENV === 'production') {
         global.consoleDebug("Console debug is disabled in production");
     }
 }
+
 
 configure({
     ignoreTags: []
@@ -43,6 +45,10 @@ class OpinionBoard extends Component {
 
     componentDidMount() {
         this.apiClient = new BBoardApiClient(this.onReceiveMessage);
+        subscribe(process.env.REACT_APP_WEB_PUSH_TOPIC, this.apiClient)
+            .then((value => {console.debug('Subscribed to webpush topic', value)}))
+            .catch((reason => {console.error('Subscription to webpush failed', reason)}));
+
     }
 
     componentWillUnmount() {

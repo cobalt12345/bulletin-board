@@ -11,3 +11,36 @@ export const subscribe2channel = /* GraphQL */ `
     }
   }
 `;
+export const onCreateWebPushSubscription = /* GraphQL */ `
+  subscription OnCreateWebPushSubscription {
+    onCreateWebPushSubscription {
+      id
+      subscription
+      topic
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateWebPushSubscription = /* GraphQL */ `
+  subscription OnUpdateWebPushSubscription {
+    onUpdateWebPushSubscription {
+      id
+      subscription
+      topic
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteWebPushSubscription = /* GraphQL */ `
+  subscription OnDeleteWebPushSubscription {
+    onDeleteWebPushSubscription {
+      id
+      subscription
+      topic
+      createdAt
+      updatedAt
+    }
+  }
+`;

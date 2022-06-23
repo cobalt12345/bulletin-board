@@ -1,6 +1,6 @@
 [
   {
-    "Action": [],
-    "Resource": []
+    "Action": ['dynamodb:Scan'],
+    "Resource": ['arn:aws:dynamodb:eu-central-1:785668202743:table/WebPushSubscription-htwebbaj4bcm5edviicia3ytma-dev']
   }
 ]

@@ -11,3 +11,45 @@ export const pushMessageToChannel = /* GraphQL */ `
     }
   }
 `;
+export const createWebPushSubscription = /* GraphQL */ `
+  mutation CreateWebPushSubscription(
+    $input: CreateWebPushSubscriptionInput!
+    $condition: ModelWebPushSubscriptionConditionInput
+  ) {
+    createWebPushSubscription(input: $input, condition: $condition) {
+      id
+      subscription
+      topic
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateWebPushSubscription = /* GraphQL */ `
+  mutation UpdateWebPushSubscription(
+    $input: UpdateWebPushSubscriptionInput!
+    $condition: ModelWebPushSubscriptionConditionInput
+  ) {
+    updateWebPushSubscription(input: $input, condition: $condition) {
+      id
+      subscription
+      topic
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteWebPushSubscription = /* GraphQL */ `
+  mutation DeleteWebPushSubscription(
+    $input: DeleteWebPushSubscriptionInput!
+    $condition: ModelWebPushSubscriptionConditionInput
+  ) {
+    deleteWebPushSubscription(input: $input, condition: $condition) {
+      id
+      subscription
+      topic
+      createdAt
+      updatedAt
+    }
+  }
+`;

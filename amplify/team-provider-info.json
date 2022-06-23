@@ -21,7 +21,7 @@
       "function": {
         "DatasourceAdapter": {
           "deploymentBucketName": "amplify-bulletinboard-dev-151713-deployment",
-          "s3Key": "amplify-builds/DatasourceAdapter-71494e54446753722f72-build.zip"
+          "s3Key": "amplify-builds/DatasourceAdapter-7858504e4d422b33376a-build.zip"
         }
       },
       "auth": {

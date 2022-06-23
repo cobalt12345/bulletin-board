@@ -21,3 +21,36 @@ export const lastNMessages = /* GraphQL */ `
     }
   }
 `;
+export const getWebPushSubscription = /* GraphQL */ `
+  query GetWebPushSubscription($id: ID!) {
+    getWebPushSubscription(id: $id) {
+      id
+      subscription
+      topic
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listWebPushSubscriptions = /* GraphQL */ `
+  query ListWebPushSubscriptions(
+    $filter: ModelWebPushSubscriptionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listWebPushSubscriptions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        subscription
+        topic
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
