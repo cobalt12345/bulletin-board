@@ -2,6 +2,13 @@ import BBoardApiClient from "./BBoardApiClient";
 
 const config = { pushKey: process.env.REACT_APP_VAPID_PUBLIC_KEY};
 
+export async function requestNotificationPermission () {
+    const permission = await window.Notification.requestPermission();
+    if (permission !== 'granted') {
+        throw new Error('Permission not granted for Notification');
+    }
+}
+
 export default async function subscribe(topic, apiClient: BBoardApiClient) {
     let swReg = await navigator.serviceWorker.register("/sw.js");
     let subscription = await swReg.pushManager.getSubscription();

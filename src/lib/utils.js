@@ -2,7 +2,8 @@ import {styled} from "@mui/material/styles";
 import {Paper} from "@mui/material";
 
 export const keyMap = {
-    SAVE_MESSAGE: ['command+enter', 'ctrl+enter']
+    SAVE_MESSAGE: ['command+enter', 'ctrl+enter'],
+    NEW_MESSAGE: ['command+i', 'ctrl+i']
 };
 
 export const Item = styled(Paper)(({ theme }) => ({

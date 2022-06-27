@@ -8,6 +8,8 @@ export const subscribe2channel = /* GraphQL */ `
       channel
       body
       publishedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -39,6 +41,42 @@ export const onDeleteWebPushSubscription = /* GraphQL */ `
       id
       subscription
       topic
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateBoardMessage = /* GraphQL */ `
+  subscription OnCreateBoardMessage {
+    onCreateBoardMessage {
+      id
+      channel
+      body
+      publishedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateBoardMessage = /* GraphQL */ `
+  subscription OnUpdateBoardMessage {
+    onUpdateBoardMessage {
+      id
+      channel
+      body
+      publishedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteBoardMessage = /* GraphQL */ `
+  subscription OnDeleteBoardMessage {
+    onDeleteBoardMessage {
+      id
+      channel
+      body
+      publishedAt
       createdAt
       updatedAt
     }

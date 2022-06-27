@@ -21,7 +21,7 @@
       "function": {
         "DatasourceAdapter": {
           "deploymentBucketName": "amplify-bulletinboard-dev-151713-deployment",
-          "s3Key": "amplify-builds/DatasourceAdapter-45474b704559366b6e32-build.zip",
+          "s3Key": "amplify-builds/DatasourceAdapter-36676c6c5a534f692f2b-build.zip",
           "reactAppVapidSubject": "mailto: <denis.talochkin@gmail.com>",
           "reactAppVapidPublicKey": "***REMOVED***",
           "reactAppVapidPrivateKey": "***REMOVED***",

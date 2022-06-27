@@ -1,8 +1,8 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+#input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type WebPushSubscription @model {
+type WebPushSubscription @model @auth(rules: [{ allow: public, provider: apiKey }]){
     id: ID!
     subscription: String!
     topic: String!
@@ -14,20 +14,15 @@ schema {
     subscription: Subscription
 }
 
-type BoardMessage {
+type BoardMessage @model @auth(rules: [{ allow: public, provider: apiKey }]){
     id: ID!
-    channel: String!
+    channel: String! @index(name: "messagesByPublishDate", queryField: "messagesByPublishDate", sortKeyFields: ["publishedAt"])
     body: String!
     publishedAt: AWSDateTime!
 }
 
 type Mutation {
     pushMessageToChannel(channel: String!, data: String!): BoardMessage @function(name: "DatasourceAdapter-${env}")
-}
-
-type Query {
-    allMessages: [BoardMessage] @function(name: "DatasourceAdapter-${env}")
-    lastNMessages(numOfMessages: Int!): [BoardMessage] @function(name: "DatasourceAdapter-${env}")
 }
 
 type Subscription {

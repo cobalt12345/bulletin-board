@@ -44,7 +44,7 @@ export default class AddMessageDialog extends Component {
     render() {
 
         return (
-            <GlobalHotKeys handlers={this.hotKeyHandlers} focused='true'>
+            <GlobalHotKeys handlers={this.hotKeyHandlers}>
                 <div>
                     <Dialog
                         open={this.props.isOpen}
@@ -74,6 +74,8 @@ export default class AddMessageDialog extends Component {
                                     value={this.state.opinion}
                                     onChange={this.handleTextTypeIn}
                                     variant="filled"
+                                    focused
+                                    autoFocus
                                 />
                                 )
                             }
