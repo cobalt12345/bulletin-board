@@ -41,11 +41,16 @@ exports.handler = async (event, context, callback) => {
     console.debug("Received event {}", JSON.stringify(event, 3));
 
     console.debug("Context {}", JSON.stringify(event, 3));
+
+    const dateTimeISO = new Date().toISOString();
+
     let message = {
         id: uuidv4(),
         channel: event.arguments.channel,
         body: event.arguments.data,
-        publishedAt: new Date().toISOString()
+        createdAt: dateTimeISO,
+        publishedAt: dateTimeISO,
+        updatedAt: dateTimeISO
     };
 
     callback(null, message);
