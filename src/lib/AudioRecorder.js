@@ -5,6 +5,7 @@ import {PlayArrow, Stop} from "@mui/icons-material";
 import {Predictions} from "aws-amplify";
 
 export default function AudioRecorder(props) {
+
     const [recording, setRecording] = useState(false);
     const [micStream, setMicStream] = useState();
     const [transcribing, setTranscribing] = useState();
@@ -19,7 +20,7 @@ export default function AudioRecorder(props) {
             }
 
             function newBuffer() {
-                console.log("resetting buffer");
+                // console.log("resetting buffer");
                 buffer = [];
             }
 
@@ -38,7 +39,7 @@ export default function AudioRecorder(props) {
     );
 
     async function startRecording() {
-        console.log('start recording');
+        // console.log('start recording');
         props.onStartRecording(true);
         audioBuffer.reset();
 
@@ -58,7 +59,7 @@ export default function AudioRecorder(props) {
     }
 
     async function stopRecording() {
-        console.log('stop recording');
+        // console.log('stop recording');
         setTranscribing(true);
         micStream.stop();
         setMicStream(null);
@@ -79,7 +80,7 @@ export default function AudioRecorder(props) {
                 // language: "en-US", // other options are "en-GB", "fr-FR", "fr-CA", "es-US"
             },
         }).then(({ transcription: { fullText } }) => {
-            console.debug('Transcribed text: ', fullText);
+            // console.debug('Transcribed text: ', fullText);
             // this.setState({opinion: fullText, isRecording: false});
             props.onStopRecording(false, fullText);
             setTranscribing(false);
@@ -88,10 +89,10 @@ export default function AudioRecorder(props) {
 
     async function onStartStopRecord() {
         if (recording) {
-            console.debug('Stop recording');
+            // console.debug('Stop recording');
             await stopRecording();
         } else {
-            console.debug('Start recording');
+            // console.debug('Start recording');
             await startRecording();
         }
     }

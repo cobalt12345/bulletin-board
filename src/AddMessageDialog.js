@@ -19,26 +19,47 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default class AddMessageDialog extends Component {
 
+    MAX_NUM_OF_CHARACTERS_PER_MSG = process.env.REACT_APP_MAX_NUM_OF_CHARACTERS_PER_MSG;
+
     constructor(props) {
         super(props);
-        this.state = {opinion: '', isRecording: false};
+        this.state = {opinion: '', isRecording: false, errorMessages: []};
         console.debug('AddMessageDialog initially open: ' + this.state.open);
         this.handleTextTypeIn = this.handleTextTypeIn.bind(this);
         this.onSave = this.onSave.bind(this);
+        this.isMessageValid = this.isMessageValid.bind(this);
         this.hotKeyHandlers = {
             SAVE_MESSAGE: this.onSave
         }
     }
 
     handleTextTypeIn(event) {
-        this.setState({opinion: event.target.value});
+        this.isMessageValid(event.target.value);
+        this.setState({opinion: event.target.value})
+    }
+
+    isMessageValid(text) {
+
+        if (text.length > this.MAX_NUM_OF_CHARACTERS_PER_MSG) {
+            this.setState({errorMessages: [`Message exceeds ${this.MAX_NUM_OF_CHARACTERS_PER_MSG} characters`]});
+
+            return false;
+        } else {
+            this.setState({
+                errorMessages: []
+            })
+
+            return true;
+        }
+
     }
 
     onSave() {
-        if (this.state.opinion.trim().length > 0) {
+        const trimmedMessage = this.state.opinion.trim();
+        if (trimmedMessage.length > 0 && this.isMessageValid(trimmedMessage)) {
             this.props.onSave(this.state.opinion);
+            this.setState({opinion: ''});
         }
-        this.setState({opinion: ''});
     }
 
     render() {
@@ -76,6 +97,8 @@ export default class AddMessageDialog extends Component {
                                     variant="filled"
                                     focused
                                     autoFocus
+                                    error={this.state.errorMessages.length > 0}
+                                    helperText={this.state.errorMessages.join('\n')}
                                 />
                                 )
                             }
@@ -87,14 +110,16 @@ export default class AddMessageDialog extends Component {
                                 onStopRecording={
                                     (start: boolean, text: string) => {
                                         this.setState({isRecording: start, opinion: text});
+                                        this.handleTextTypeIn({target: {value: text}})
                                     }
                                 }
                                 />
                             <Button onClick={() => {
-                                this.setState({opinion: ''})
+                                this.setState({opinion: '', errorMessages: []})
                                 this.props.onCancel();
                             }} disabled={this.state.isRecording}>Cancel</Button>
-                            <Button onClick={this.onSave} disabled={this.state.isRecording}>Add</Button>
+
+                            <Button onClick={this.onSave} disabled={this.state.isRecording || this.state.errorMessages.length > 0}>Add</Button>
                         </DialogActions>
                     </Dialog>
                 </div>
