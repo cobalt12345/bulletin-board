@@ -23,8 +23,8 @@
           "deploymentBucketName": "amplify-bulletinboard-dev-151713-deployment",
           "s3Key": "amplify-builds/DatasourceAdapter-36676c6c5a534f692f2b-build.zip",
           "reactAppVapidSubject": "mailto: <***REMOVED***>",
-          "reactAppVapidPublicKey": "***REMOVED***",
-          "reactAppVapidPrivateKey": "***REMOVED***",
+          "reactAppVapidPublicKey": "",
+          "reactAppVapidPrivateKey": "",
           "reactAppWebPushTopic": "imho"
         }
       },
