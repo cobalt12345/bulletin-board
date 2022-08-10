@@ -6,16 +6,16 @@
       "environmentVariableName": "REACT_APP_VAPID_SUBJECT"
     },
     {
+      "cloudFormationParameterName": "reactAppWebPushTopic",
+      "environmentVariableName": "REACT_APP_WEB_PUSH_TOPIC"
+    },
+    {
       "cloudFormationParameterName": "reactAppVapidPublicKey",
       "environmentVariableName": "REACT_APP_VAPID_PUBLIC_KEY"
     },
     {
       "cloudFormationParameterName": "reactAppVapidPrivateKey",
       "environmentVariableName": "REACT_APP_VAPID_PRIVATE_KEY"
-    },
-    {
-      "cloudFormationParameterName": "reactAppWebPushTopic",
-      "environmentVariableName": "REACT_APP_WEB_PUSH_TOPIC"
     }
   ]
 }

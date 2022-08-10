@@ -19,13 +19,13 @@
     "reactAppVapidSubject": {
       "Type": "String"
     },
+    "reactAppWebPushTopic": {
+      "Type": "String"
+    },
     "reactAppVapidPublicKey": {
       "Type": "String"
     },
     "reactAppVapidPrivateKey": {
-      "Type": "String"
-    },
-    "reactAppWebPushTopic": {
       "Type": "String"
     }
   },
@@ -85,14 +85,14 @@
             "REACT_APP_VAPID_SUBJECT": {
               "Ref": "reactAppVapidSubject"
             },
+            "REACT_APP_WEB_PUSH_TOPIC": {
+              "Ref": "reactAppWebPushTopic"
+            },
             "REACT_APP_VAPID_PUBLIC_KEY": {
               "Ref": "reactAppVapidPublicKey"
             },
             "REACT_APP_VAPID_PRIVATE_KEY": {
               "Ref": "reactAppVapidPrivateKey"
-            },
-            "REACT_APP_WEB_PUSH_TOPIC": {
-              "Ref": "reactAppWebPushTopic"
             }
           }
         },
